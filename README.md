@@ -24,7 +24,7 @@ type Config struct {
 
 func main() {
   var conf Config
-  _, err := confer.LoadConfig([]string{}, &conf)
+  err := confer.LoadConfig([]string{}, &conf)
   if err != nil {
     panic(err)
   }
@@ -50,7 +50,7 @@ func main() {
   defaultLocalPath := "~/cofigfile"
   defaultGloabalPath := "/etc/cofigfile"
   var conf Config
-  _, err := confer.LoadConfig([]string{defaultLocalPath, defaultGloabalPath}, &conf)
+  err := confer.LoadConfig([]string{defaultLocalPath, defaultGloabalPath}, &conf)
   if err != nil {
     panic(err)
   }
