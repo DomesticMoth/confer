@@ -5,15 +5,18 @@ import (
 	"os"
 	"errors"
 	"github.com/BurntSushi/toml"
+	"github.com/mitchellh/go-homedir"
 )
-
 
 // Load configuration from toml file located on the path passed in the arguments or on one of the default paths.
 func LoadConfig(paths []string, conf interface{}) (err error){
 	// If the path is passed through arguments
 	if len(os.Args) > 1 {
+		// Expand path
+		p, err := homedir.Expand(os.Args[1])
+		if err != nil { return err }
 		// Put it at the top of the list of paths
-		paths = append(os.Args[1:2], paths...)
+		paths = append([]string{p}, paths...)
 	}
 	// An error for the case if there is no path
 	err = errors.New("No path was passed to find the configuration file")
