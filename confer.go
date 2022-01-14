@@ -12,16 +12,15 @@ import (
 func LoadConfig(paths []string, conf interface{}) (err error){
 	// If the path is passed through arguments
 	if len(os.Args) > 1 {
-		// Expand path
-		p, err := homedir.Expand(os.Args[1])
-		if err != nil { return err }
 		// Put it at the top of the list of paths
-		paths = append([]string{p}, paths...)
+		paths = append(os.Args[1:2], paths...)
 	}
 	// An error for the case if there is no path
 	err = errors.New("No path was passed to find the configuration file")
 	// Trying each of the paths
 	for _, path := range paths {
+		path, err = homedir.Expand(path)
+		if err != nil { return }	
 		_, err = toml.DecodeFile(path, conf)
 		// If config was loaded, return the result
 		if err == nil { return }	
